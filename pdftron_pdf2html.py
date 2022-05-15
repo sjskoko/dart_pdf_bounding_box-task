@@ -27,7 +27,7 @@ for i in range(len(pdf_file_list)):
         os.makedirs(pdf_save_directory)
 
     ## loop of each page
-    for j in range(len(pages)):
+    for j in range(min(10, len(pages))):
         
         page = pages[j]
         page_height = page.height
