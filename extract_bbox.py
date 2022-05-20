@@ -74,7 +74,6 @@ def create_bbox_with_img_save(folder_path, save_path=None):
             if tabel_objects:
                 table_bbox_list = [i.bbox for i in tabel_objects]
                 # print(j, 'page Table', table_bbox_list)
-
                 for bbox in bbox_padding(table_bbox_list):
                     im.draw_rect(bbox, stroke='red')
 
