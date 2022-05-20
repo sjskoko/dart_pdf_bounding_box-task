@@ -1,90 +1,102 @@
-from fileinput import filelineno, filename
-import pdfplumber
 import os
+from tqdm import tqdm
 
-## pdf folder path
-folder_path = 'sample_pdf_file'
+import pdfplumber
 
-## bounding box img save path
-save_path = 'sample_img_file'
+def listing_file_names(folder_path):
+    if not os.path.exists(folder_path):
+        folder_name = folder_path.split('/')[-1]
+        exit(f'FolderNotExistError: There is no [{folder_name}] folder')
 
-## list file name
-pdf_file_list = os.listdir(folder_path)
-pdf_file_path = [folder_path + '/' + file_name for file_name in pdf_file_list]
-# print(pdf_file_path)
+    ## list file name
+    pdf_file_lists = os.listdir(folder_path)
+    if not pdf_file_lists:
+        exit('FileNotExistError: There are no files in the folder')
+    
+    return pdf_file_lists
 
-def bbox_padding(bbox_list, padding=30):
+def listing_file_paths(folder_path):
+
+    ## list file name
+    pdf_file_lists = listing_file_names(folder_path=folder_path)
+
+    pdf_file_paths = [folder_path + '/' + file_name for file_name in pdf_file_lists]
+
+    return pdf_file_paths
+
+def bbox_padding(bbox_list, padding=0):
     new_bbox = []
     for bbox in bbox_list:
         new_bbox.append((bbox[0], max(bbox[1]-padding, 0), bbox[2], min(bbox[3]+padding, 842)))
     return new_bbox
 
+def create_bbox_with_img_save(folder_path, save_path=None):
 
-## loop of saving img
-for i in range(len(pdf_file_list)):
+    pdf_file_lists = listing_file_names(folder_path=folder_path)
+    pdf_file_paths = listing_file_paths(folder_path=folder_path)
+    
 
-    pdf = pdfplumber.open(pdf_file_path[i]) # open ith file
-    pages = pdf.pages # define each page
+    print('save is [' + str(save_path is not None) + ']')
+    if save_path is not None:
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
 
-    file_name = pdf_file_list[i]
-    pdf_save_directory = save_path + '/' + file_name[:-4]
 
-    ## make directory for file
-    if not os.path.exists(pdf_save_directory):
-        os.makedirs(pdf_save_directory)
+    pdf_dict = {}
 
-    ## loop of each page
-    for j in range(min(20, len(pages))):
-        
-        page = pages[j]
-        page_height = page.height
+    ## loop of saving img
+    for i in tqdm(range(len(pdf_file_lists))):
 
-        tabel_objects = page.find_tables()
-        img_objects = page.images
-        im = page.to_image(resolution=400)
+        page_img_list =[]
 
-        if tabel_objects:
-            table_bbox_list = [i.bbox for i in tabel_objects]
-            print(j, 'page Table', table_bbox_list)
+        pdf = pdfplumber.open(pdf_file_paths[i]) # open ith file
+        pages = pdf.pages # define each page
 
-            for bbox in bbox_padding(table_bbox_list):
-                im.draw_rect(bbox, stroke='red')
+        file_name = pdf_file_lists[i]
 
-        if img_objects:
-            img_bbox_list = [(image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0']) for image in img_objects]
-            print(j, 'page Image', img_bbox_list)
-            for bbox in bbox_padding(img_bbox_list):
-                im.draw_rect(bbox, stroke='blue')
+        if save_path is not None:
+            pdf_save_directory = save_path + '/' + file_name[:-4]
 
-        im.save(pdf_save_directory + '/' + file_name[:-4] + '_' + str(j) + '.png', format='PNG')
+            ## make directory for file
+            if not os.path.exists(pdf_save_directory):
+                os.makedirs(pdf_save_directory)
+
+        ## loop of each page
+        for j in range(min(20, len(pages))):
             
+            page = pages[j]
+            page_height = page.height
+
+            tabel_objects = page.find_tables()
+            img_objects = page.images
+            im = page.to_image(resolution=400)
+
+            if tabel_objects:
+                table_bbox_list = [i.bbox for i in tabel_objects]
+                # print(j, 'page Table', table_bbox_list)
+
+                for bbox in bbox_padding(table_bbox_list):
+                    im.draw_rect(bbox, stroke='red')
+
+            if img_objects:
+                img_bbox_list = [(image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0']) for image in img_objects]
+                # print(j, 'page Image', img_bbox_list)
+                for bbox in bbox_padding(img_bbox_list):
+                    im.draw_rect(bbox, stroke='blue')
+
+            page_img_list.append(im)
+
+            if save_path is not None:
+                im.save(pdf_save_directory + '/' + file_name[:-4] + '_' + str(j) + '.png', format='PNG')
+
+        pdf_dict[pdf_file_paths[i]] = page_img_list
 
 
+    return pdf_dict
 
 
-
-# pdf = pdfplumber.open(file_path[0])
-# pdf = pdfplumber.open('sample.pdf')
-# page = pdf.pages[1]
-# page.show()
-
-# page.extract_tables()
-# image_in_page_89 = page.images
-# page_height = page.height
-# image = image_in_page_89[1] # assuming images_in_page has at least one element, only for understanding purpose. 
-# image_bbox = (image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0'])
-# # cropped_page = page.crop(image_bbox)
-# #image_obj = cropped_page.to_image(resolution=400)
-# image_obj.save('sample_img2.png')
-
-# ################
-# a= page.find_tables()
-
-# a.bbox
-
-# im = page.to_image(resolution=150)
-
-# im.draw_rect(image_bbox, stroke='red', fill=False)
-
-# im.save('sample.png', fornat='PNG')
+if __name__ == '__main__':
+    folder_path = 'C:/Users/TFG256XG/Documents/GitHub/hwp_bounding_box-task/sample_pdf_file'
+    save_path = 'C:/Users/TFG256XG/Documents/GitHub/hwp_bounding_box-task/sample_img_file'
+    img_dict = create_bbox_with_img_save(folder_path=folder_path, save_path=save_path)
 
