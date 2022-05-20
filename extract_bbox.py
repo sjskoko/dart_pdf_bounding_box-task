@@ -3,15 +3,22 @@ import pdfplumber
 import os
 
 ## pdf folder path
-folder_path = 'pdf_file'
+folder_path = 'sample_pdf_file'
 
 ## bounding box img save path
-save_path = 'img_file'
+save_path = 'sample_img_file'
 
 ## list file name
 pdf_file_list = os.listdir(folder_path)
 pdf_file_path = [folder_path + '/' + file_name for file_name in pdf_file_list]
 # print(pdf_file_path)
+
+def bbox_padding(bbox_list, padding=30):
+    new_bbox = []
+    for bbox in bbox_list:
+        new_bbox.append((bbox[0], max(bbox[1]-padding, 0), bbox[2], min(bbox[3]+padding, 842)))
+    return new_bbox
+
 
 ## loop of saving img
 for i in range(len(pdf_file_list)):
@@ -27,7 +34,7 @@ for i in range(len(pdf_file_list)):
         os.makedirs(pdf_save_directory)
 
     ## loop of each page
-    for j in range(min(10, len(pages))):
+    for j in range(min(20, len(pages))):
         
         page = pages[j]
         page_height = page.height
@@ -38,14 +45,15 @@ for i in range(len(pdf_file_list)):
 
         if tabel_objects:
             table_bbox_list = [i.bbox for i in tabel_objects]
+            print(j, 'page Table', table_bbox_list)
 
-            for bbox in table_bbox_list:
+            for bbox in bbox_padding(table_bbox_list):
                 im.draw_rect(bbox, stroke='red')
 
         if img_objects:
             img_bbox_list = [(image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0']) for image in img_objects]
-
-            for bbox in img_bbox_list:
+            print(j, 'page Image', img_bbox_list)
+            for bbox in bbox_padding(img_bbox_list):
                 im.draw_rect(bbox, stroke='blue')
 
         im.save(pdf_save_directory + '/' + file_name[:-4] + '_' + str(j) + '.png', format='PNG')
