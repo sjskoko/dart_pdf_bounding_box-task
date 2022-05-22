@@ -62,24 +62,24 @@ def create_bbox_with_img_save(folder_path, save_path=None):
                 os.makedirs(pdf_save_directory)
 
         ## loop of each page
-        for j in range(min(20, len(pages))):
+        for j in range(min(30,len(pages))):
             
             page = pages[j]
             page_height = page.height
 
-            tabel_objects = page.find_tables()
+            tabel_objects = page.find_tables(table_settings={'vertical_strategy': 'lines', 'horizontal_strategy': 'lines'})
             img_objects = page.images
             im = page.to_image(resolution=400)
 
             if tabel_objects:
                 table_bbox_list = [i.bbox for i in tabel_objects]
-                # print(j, 'page Table', table_bbox_list)
+                print(j, 'page Table', table_bbox_list)
                 for bbox in bbox_padding(table_bbox_list):
                     im.draw_rect(bbox, stroke='red')
 
             if img_objects:
                 img_bbox_list = [(image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0']) for image in img_objects]
-                # print(j, 'page Image', img_bbox_list)
+                print(j, 'page Image', img_bbox_list)
                 for bbox in bbox_padding(img_bbox_list):
                     im.draw_rect(bbox, stroke='blue')
 
@@ -95,7 +95,7 @@ def create_bbox_with_img_save(folder_path, save_path=None):
 
 
 if __name__ == '__main__':
-    folder_path = 'C:/Users/TFG256XG/Documents/GitHub/hwp_bounding_box-task/sample_pdf_file'
-    save_path = 'C:/Users/TFG256XG/Documents/GitHub/hwp_bounding_box-task/sample_img_file'
+    folder_path = 'sample_pdf_file'
+    save_path = 'img_file'
     img_dict = create_bbox_with_img_save(folder_path=folder_path, save_path=save_path)
 
