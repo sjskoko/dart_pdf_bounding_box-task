@@ -67,12 +67,12 @@ def create_bbox_with_img_save(folder_path, save_path=None):
             page = pages[j]
             page_height = page.height
 
-            tabel_objects = page.find_tables(table_settings={'vertical_strategy': 'lines', 'horizontal_strategy': 'lines'})
+            table_objects = page.find_tables(table_settings={'vertical_strategy': 'lines', 'horizontal_strategy': 'lines'})
             img_objects = page.images
             im = page.to_image(resolution=400)
 
-            if tabel_objects:
-                table_bbox_list = [i.bbox for i in tabel_objects]
+            if table_objects:
+                table_bbox_list = [i.bbox for i in table_objects]
                 print(j, 'page Table', table_bbox_list)
                 for bbox in bbox_padding(table_bbox_list):
                     im.draw_rect(bbox, stroke='red')
@@ -93,9 +93,61 @@ def create_bbox_with_img_save(folder_path, save_path=None):
 
     return pdf_dict
 
+def get_text(page):
+    text = page.extract_words()
+    return text
+
+def get_table(page):
+    table = page.extract_tables()
+    return table
+
+def get_image(page):
+    image = page.images
+
+
+
+
 
 if __name__ == '__main__':
     folder_path = 'sample_pdf_file'
     save_path = 'sample_img_file'
-    img_dict = create_bbox_with_img_save(folder_path=folder_path, save_path=save_path)
+    # img_dict = create_bbox_with_img_save(folder_path=folder_path, save_path=save_path)
 
+
+    pdf_file_lists = listing_file_names(folder_path=folder_path)
+    pdf_file_paths = listing_file_paths(folder_path=folder_path)
+
+
+    print('save is [' + str(save_path is not None) + ']')
+    if save_path is not None:
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
+
+    pdf_dict = {}
+
+    pdf = pdfplumber.open(pdf_file_paths[0])
+    pages = pdf.pages
+    page = pages[5]
+
+    table = get_table(page)
+    image = get_image(page)
+    text = get_text(page)
+
+    def bounding_box(dict):
+
+        bbox = [dict['x0'], dict['y0'], dict['x1'], dict['y1']]
+        text = '({}, {}), ({}, {})'.format(bbox)
+        text += str(dict['x0'])
+        text += ', '
+        text += str(dict['y0'])
+        text += '), ('
+        text += str(dict['x1'])
+        text += ', '
+        text += str(dict['y1'])
+        text += ')'
+        return text
+    for i in range(len(text)):
+        print(text[i]['text'])
+    print(text[0]['text'])
+    print(bounding_box(text[0]))
