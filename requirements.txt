@@ -4,3 +4,5 @@ numpy
 pdfplumber
 Pillow
 Wand
+libmagickwand-dev
+ImageMagick
