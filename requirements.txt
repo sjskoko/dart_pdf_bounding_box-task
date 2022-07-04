@@ -4,6 +4,3 @@ numpy
 pdfplumber
 Pillow
 Wand
--c conda-forge/label/cf202003 imagemagick
-libmagickwand-dev
-# ImageMagick
