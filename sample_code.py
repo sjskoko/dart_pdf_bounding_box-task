@@ -76,6 +76,12 @@ if uploaded_file is not None:
         
         img_list.append(im)
 
+
+
+
+# 아래 실행 안됨
+# image 저장 후 다시 끌어와서 변환하도록 변경
+
     st.image(img_list[0])
     output_pdf = img2pdf.convert(img_list)
 
