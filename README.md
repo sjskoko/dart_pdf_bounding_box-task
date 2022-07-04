@@ -1,4 +1,4 @@
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/sjskoko/dart_pdf_bounding_box-task/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/sjskoko/dart_pdf_bounding_box-task/main/pdf_bbox_app.py)
 
 # hwp_bounding_box-task
 This project will be used for object detection task. 
@@ -8,4 +8,3 @@ This project will be used for object detection task.
 2. bounding box 너비를 조절하여 위아래 캡션/제목 추출기능
 
 3. 이미지/표 개수 요약 파일 추가
-https://sjskoko-dart-pdf-bounding-box-task-pdf-bbox-app-7r3k9p.streamlitapp.com/
