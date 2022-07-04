@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import pandas as pd
 import numpy as np
-import img2pdf
 import pdfplumber
 from PIL import Image
 from util import *
