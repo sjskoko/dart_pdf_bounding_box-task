@@ -3,4 +3,4 @@ pandas
 numpy
 pdfplumber
 Pillow
-wand
+Wand
