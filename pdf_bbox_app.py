@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import pdfplumber
 from PIL import Image
+from stqdm import stqdm
 from util import *
 from caption_extraction import *
 
@@ -12,7 +13,7 @@ st.title('PDF Object Extractor')
 
 #########
 
-uploaded_file = st.file_uploader('Drop the pdf', type='pdf')
+uploaded_file = st.file_uploader('Drop your pdf', type='pdf')
 
 # display document
 
@@ -36,9 +37,11 @@ if uploaded_file is not None and st.button('process pdf'):
     
     # 이미지 모음
     img_list = []
-
+    
+    st.header('object detection')
+    my_bar = st.progress(0)
     # 각 page 루프
-    for i, page in tqdm(enumerate(pages)):
+    for i, page in stqdm(enumerate(pages)):
 
         # text, image 객체 추출
         text = get_text(page)
@@ -76,14 +79,16 @@ if uploaded_file is not None and st.button('process pdf'):
                 im.draw_rect(bbox, stroke='blue')
         
         img_list.append(im)
+        my_bar.progress((i+1)/len(pages))
 
     if not os.path.exists(os.path.join('img_file', uploaded_file_name)):
         os.makedirs(os.path.join('img_file', uploaded_file_name))
 
+    st.header('Converting pdf')
     my_bar = st.progress(0)
     for i, im in enumerate(img_list):
         im.save(os.path.join('img_file', uploaded_file_name, f'{uploaded_file_name}_{i}.png'), format='PNG')
-        my_bar.progress(i+1)
+        my_bar.progress((i+1)/len(img_list))
 
 
 
