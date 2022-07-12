@@ -8,17 +8,24 @@ from stqdm import stqdm
 from util import *
 from caption_extraction import *
 
-st.title('PDF Object Extractor')
+st.title('DART-based 기업공시 Object Extractor')
 
 
 #########
 
 uploaded_file = st.file_uploader('Drop your pdf', type='pdf')
+download_togle = False
 
 # display document
 
+options = st.sidebar.multiselect(
+    'select object',
+    ['Image', 'Table'])
+
+number = st.sidebar.slider('caption parameter', 0, 100, 50)
 
 if uploaded_file is not None and st.button('process pdf'):
+
 
     with open(os.path.join('pdf_file', uploaded_file.name), 'wb') as f:
         f.write(uploaded_file.getbuffer())
@@ -62,7 +69,7 @@ if uploaded_file is not None and st.button('process pdf'):
         
         im = page.to_image(resolution=400)
 
-        if table:
+        if table and 'Table' in options:
             table_bbox_list = [i.bbox for i in table_obj]
             print(i, 'page Table', table_bbox_list)
             for bbox in bbox_padding(table_bbox_list):
@@ -70,7 +77,7 @@ if uploaded_file is not None and st.button('process pdf'):
 
 
 
-        if image:
+        if image and 'Image' in options:
             page_height = page.height
 
             img_bbox_list = [(image['x0'], page_height - image['y1'], image['x1'], page_height - image['y0']) for image in image]
@@ -89,10 +96,13 @@ if uploaded_file is not None and st.button('process pdf'):
     for i, im in enumerate(img_list):
         im.save(os.path.join('img_file', uploaded_file_name, f'{uploaded_file_name}_{i}.png'), format='PNG')
         my_bar.progress((i+1)/len(img_list))
+    
+    download_togle = True
 
 
 
 
+if download_togle:
 # 아래 실행 안됨
 # image 저장 후 다시 끌어와서 변환하도록 변경
     # converted_img_list = [i.convert('RGB') for i in img_list[1:]]
