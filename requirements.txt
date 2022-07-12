@@ -4,3 +4,4 @@ numpy
 pdfplumber
 Pillow
 Wand
+stqdm
