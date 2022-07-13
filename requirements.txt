@@ -1,7 +1,0 @@
-streamlit
-pandas
-numpy
-pdfplumber
-Pillow
-Wand
-stqdm
