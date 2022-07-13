@@ -1,3 +1,2 @@
 imagemagick
-magick
 ghostscript
