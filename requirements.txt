@@ -1,4 +1,3 @@
-imagemagick
 streamlit
 pandas
 numpy
