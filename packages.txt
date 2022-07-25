@@ -1,4 +1,8 @@
 freeglut3-dev
 libgtk2.0-dev
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38fa8f377f76f77e90d3dfcdcb087c4163a937f5
 imagemagick
 ghostscript
