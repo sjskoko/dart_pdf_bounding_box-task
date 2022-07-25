@@ -1,5 +1,5 @@
 freeglut3-dev
 libgtk2.0-dev
 
-imagemagick
-ghostscript
+imagemagick-dev
+ghostscript-dev
