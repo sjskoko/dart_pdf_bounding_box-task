@@ -8,3 +8,13 @@ This project will be used for object detection task.
 2. bounding box 너비를 조절하여 위아래 캡션/제목 추출기능
 
 3. 이미지/표 개수 요약 파일 추가
+
+### 220725 수정사항
+streamlit 상에 설치된 ImageMagick의 policy.xml 수정이 필요
+
+1. cloud 서버의 ImageMagick 설치 위치 찾기
+
+2. 해당 위치에서 policy.xml 파일을 직접 수정
+https://codechacha.com/ko/python-create-and-write-xml/
+https://imagemagick.org/script/security-policy.php
+https://stackoverflow.com/questions/52861946/imagemagick-not-authorized-to-convert-pdf-to-an-image
