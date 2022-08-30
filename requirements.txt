@@ -5,3 +5,4 @@ pdfplumber
 Pillow
 Wand
 stqdm
+poppler-utils
