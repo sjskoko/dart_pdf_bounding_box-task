@@ -14,7 +14,7 @@ from pdf2image.exceptions import (
     PDFPageCountError,
     PDFSyntaxError
 )
-from pdf2image import convert_from_bytes, convert_from_path
+from pdf2jpg import pdf2jpg
 
 st.title('DART-based 기업공시 Object Extractor')
 
@@ -66,9 +66,16 @@ if uploaded_files is not None and process_button:
 
         # 임시 이미지 저장
         st.header('pdf2img test')
-        images = convert_from_path(os.path.join('pdf_file', uploaded_file_name))
-        for i, image in enumerate(images):
-            image.save(os.path.join('temp_img', str(i)+'.jpg'), 'JPEG')
+        inputpath = os.path.join('pdf_file', uploaded_file_name)
+        outputpath = r""
+        imgae_result = pdf2jpg.convert_pdf2jpg(inputpath,outputpath, pages="ALL")
+
+
+
+
+        # images = convert_from_path(os.path.join('pdf_file', uploaded_file_name))
+        # for i, image in enumerate(images):
+        #     image.save(os.path.join('temp_img', str(i)+'.jpg'), 'JPEG')
         
         
         
@@ -154,7 +161,7 @@ if download_togle:
         
         uploaded_file_name = uploaded_file.name
 
-        img_file_paths = get_file_paths(folder_path=f'temp_img')
+        img_file_paths = get_file_paths(folder_path=uploaded_file_name + f'_dir')
         converted_imgs = []
         for path in img_file_paths:
             img_zip.write(path)
