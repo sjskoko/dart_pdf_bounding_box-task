@@ -6,4 +6,3 @@ Pillow
 Wand
 stqdm
 pdf2img
-python-poppler
