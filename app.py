@@ -29,6 +29,9 @@ options = st.sidebar.multiselect(
 
 number = st.sidebar.slider('caption parameter', 0, 100, 50)
 
+if not os.path.exists('pdf_file'):
+    os.mkdir('pdf_file')
+
 if uploaded_files is not None and process_button:
 
 
