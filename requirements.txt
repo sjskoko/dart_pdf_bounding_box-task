@@ -5,6 +5,5 @@ pdfplumber
 Pillow
 Wand
 stqdm
-poppler-utils
 pdf2img
 python-poppler
