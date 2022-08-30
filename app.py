@@ -156,7 +156,7 @@ if download_togle:
         uploaded_file_name = uploaded_file.name
         st.header(uploaded_file_name)
 
-        img_file_paths = get_file_paths(folder_path=os.path.join(os.getcwd(), uploaded_file_name + f'_dir'))
+        img_file_paths = get_file_paths(folder_path=os.path.join(os.getcwd(), uploaded_file_name + f'.pdf_dir'))
         converted_imgs = []
         for path in img_file_paths:
             img_zip.write(path)
