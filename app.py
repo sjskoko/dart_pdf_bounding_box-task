@@ -9,11 +9,6 @@ from util import *
 from caption_extraction import *
 import zipfile
 
-from pdf2image.exceptions import (
-    PDFInfoNotInstalledError,
-    PDFPageCountError,
-    PDFSyntaxError
-)
 from pdf2jpg import pdf2jpg
 
 st.title('DART-based 기업공시 Object Extractor')
