@@ -1,3 +1,2 @@
 imagemagick
 ghostscript
-poppler-utils
