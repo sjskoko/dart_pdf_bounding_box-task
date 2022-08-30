@@ -8,7 +8,7 @@ import pdfplumber
 def get_file_names(folder_path):
     if not os.path.exists(folder_path):
         folder_name = folder_path.split('/')[-1]
-        exit(f'FolderNotExistError: There is no [{folder_name}] folder')
+        # exit(f'FolderNotExistError: There is no [{folder_name}] folder')
 
     ## list file name
     pdf_file_lists = os.listdir(folder_path)
