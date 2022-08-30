@@ -5,5 +5,5 @@ pdfplumber
 Pillow
 Wand
 stqdm
-pdf2img
 poppler-utils
+pdf2img
