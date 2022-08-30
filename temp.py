@@ -11,4 +11,3 @@ images = convert_from_path('sample_pdf_file/[삼성바이오로직스]사업보�
 
 
 images[0].save('01.jpg', 'JPEG')
-im.show

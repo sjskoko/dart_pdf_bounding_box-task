@@ -6,3 +6,4 @@ Pillow
 Wand
 stqdm
 poppler-utils
+pdf2img
