@@ -155,6 +155,7 @@ if download_togle:
     for uploaded_file in uploaded_files:
         
         uploaded_file_name = uploaded_file.name
+        st.header(uploaded_file_name)
 
         img_file_paths = get_file_paths(folder_path=uploaded_file_name + f'_dir')
         converted_imgs = []
