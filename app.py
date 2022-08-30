@@ -150,7 +150,7 @@ if download_togle:
         
         uploaded_file_name = uploaded_file.name
 
-        img_file_paths = get_file_paths(folder_path=f'temp_img/{uploaded_file_name[:-4]}')
+        img_file_paths = get_file_paths(folder_path=f'temp_img')
         converted_imgs = []
         for path in img_file_paths:
             img_zip.write(path)
