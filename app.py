@@ -10,6 +10,8 @@ from caption_extraction import *
 import zipfile
 
 from pdf2jpg import pdf2jpg
+from pdf2image import convert_from_path, convert_from_bytes
+
 
 st.title('DART-based 기업공시 Object Extractor')
 
@@ -64,15 +66,15 @@ if uploaded_files is not None and process_button:
 
         # 임시 이미지 저장
         st.header('pdf2img test')
-        inputpath = os.path.join('pdf_file', uploaded_file_name)
-        outputpath = r""
-        imgae_result = pdf2jpg.convert_pdf2jpg(inputpath,outputpath, pages="ALL")
+        # inputpath = os.path.join('pdf_file', uploaded_file_name)
+        # outputpath = r""
+        # imgae_result = pdf2jpg.convert_pdf2jpg(inputpath,outputpath, pages="ALL")
 
 
 
-        # images = convert_from_path(os.path.join('pdf_file', uploaded_file_name))
-        # for i, image in enumerate(images):
-        #     image.save(os.path.join('temp_img', str(i)+'.jpg'), 'JPEG')
+        images = convert_from_path(os.path.join('pdf_file', uploaded_file_name))
+        for i, image in enumerate(images):
+            image.save(os.path.join('temp_img', str(i)+'.jpg'), 'JPEG')
         
         
         
