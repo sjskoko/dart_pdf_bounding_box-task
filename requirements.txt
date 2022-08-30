@@ -6,5 +6,4 @@ Pillow
 Wand
 stqdm
 pdf2jpg
-poppler-utils
 pdf2image
