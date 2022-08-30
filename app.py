@@ -125,7 +125,10 @@ if uploaded_files is not None and process_button:
         # # progress bar by all file
         # my_bar.progress((i_th_file+1)/len(uploaded_files))
         
-if uploaded_files and process_button:
+process_button2 = st.button('process pdf2')
+
+
+if uploaded_files and process_button2:
     download_togle = True
 
 if download_togle:
