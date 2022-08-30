@@ -64,6 +64,7 @@ if uploaded_files is not None and process_button:
         inputpath = os.path.join('pdf_file', uploaded_file_name)
         outputpath = r""
         imgae_result = pdf2jpg.convert_pdf2jpg(inputpath,outputpath, pages="ALL")
+        print(imgae_result)
 
 
 
