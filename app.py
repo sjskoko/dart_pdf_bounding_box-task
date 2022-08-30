@@ -77,8 +77,8 @@ if uploaded_files is not None and process_button:
         # outputpath = r""
         # imgae_result = pdf2jpg.convert_pdf2jpg(inputpath,outputpath, pages="ALL")
 
-
-        os.mkdir('temp_img')
+        if not os.path.exists('temp_img'):
+            os.mkdir('temp_img')
         images = convert_from_path(os.path.join('pdf_file', uploaded_file_name))
         for i, image in enumerate(images):
             image.save(os.path.join('temp_img', str(i)+'.jpg'), 'JPEG')
