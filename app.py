@@ -9,13 +9,13 @@ from util import *
 from caption_extraction import *
 import zipfile
 
-# from pdf2image.exceptions import (
-#     PDFInfoNotInstalledError,
-#     PDFPageCountError,
-#     PDFSyntaxError
-# )
+from pdf2image.exceptions import (
+    PDFInfoNotInstalledError,
+    PDFPageCountError,
+    PDFSyntaxError
+)
 from pdf2jpg import pdf2jpg
-# from pdf2image import convert_from_path, convert_from_bytes
+from pdf2image import convert_from_path, convert_from_bytes
 
 
 
