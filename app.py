@@ -142,26 +142,6 @@ if uploaded_files and process_button2:
 
 if download_togle:
 
-    # # make zip object
-    # img_zip = zipfile.ZipFile(os.path.join('output_pdf_file', "processed_file.zip"), 'w')
-    # print(uploaded_files)
-    
-    # for uploaded_file in uploaded_files:
-        
-    #     uploaded_file_name = uploaded_file.name
-
-    #     img_file_paths = get_file_paths(folder_path=f'img_file/{uploaded_file_name[:-4]}')
-    #     converted_imgs = []
-    #     for path in img_file_paths:
-    #         img_zip.write(path)
-    # img_zip.close()
-
-    # # download button
-    # with open(os.path.join('output_pdf_file', 'processed_file.zip'), 'rb') as output_zip:
-    #     st.download_button(label="Export_Report",
-    #                         data=output_zip,
-    #                         file_name=f'processed_{uploaded_file_name[:-4]}.zip')
-
     # make zip object
     img_zip = zipfile.ZipFile(os.path.join('output_pdf_file', "processed_file.zip"), 'w')
     print(uploaded_files)
@@ -169,9 +149,8 @@ if download_togle:
     for uploaded_file in uploaded_files:
         
         uploaded_file_name = uploaded_file.name
-        st.header(uploaded_file_name)
 
-        img_file_paths = get_file_paths(folder_path=uploaded_file_name + f'_dir')
+        img_file_paths = get_file_paths(folder_path=f'temp_img/{uploaded_file_name[:-4]}')
         converted_imgs = []
         for path in img_file_paths:
             img_zip.write(path)
@@ -182,3 +161,24 @@ if download_togle:
         st.download_button(label="Export_Report",
                             data=output_zip,
                             file_name=f'processed_{uploaded_file_name[:-4]}.zip')
+
+    # # make zip object
+    # img_zip = zipfile.ZipFile(os.path.join('output_pdf_file', "processed_file.zip"), 'w')
+    # print(uploaded_files)
+    
+    # for uploaded_file in uploaded_files:
+        
+    #     uploaded_file_name = uploaded_file.name
+    #     st.header(uploaded_file_name)
+
+    #     img_file_paths = get_file_paths(folder_path=uploaded_file_name + f'_dir')
+    #     converted_imgs = []
+    #     for path in img_file_paths:
+    #         img_zip.write(path)
+    # img_zip.close()
+
+    # # download button
+    # with open(os.path.join('output_pdf_file', 'processed_file.zip'), 'rb') as output_zip:
+    #     st.download_button(label="Export_Report",
+    #                         data=output_zip,
+    #                         file_name=f'processed_{uploaded_file_name[:-4]}.zip')
