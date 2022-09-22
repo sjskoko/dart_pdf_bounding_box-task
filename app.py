@@ -6,7 +6,7 @@ import pdfplumber
 from PIL import Image
 from stqdm import stqdm
 from util import *
-from caption_extraction import *
+from trash.caption_extraction import *
 import zipfile
 
 from pdf2image.exceptions import (
