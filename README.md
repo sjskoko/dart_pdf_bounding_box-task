@@ -18,3 +18,8 @@ streamlit 상에 설치된 ImageMagick의 policy.xml 수정이 필요
 https://codechacha.com/ko/python-create-and-write-xml/
 https://imagemagick.org/script/security-policy.php
 https://stackoverflow.com/questions/52861946/imagemagick-not-authorized-to-convert-pdf-to-an-image
+
+### 실행방법
+
+> python main.py --table --image --caption
+
